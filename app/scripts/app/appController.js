@@ -39,6 +39,8 @@ var ffmpeg = require('fluent-ffmpeg');
 
         $scope.player = undefined;
         app.currentTime = undefined;
+        app.savecurrentTime = undefined;
+        app.savecurrentFrame = undefined;
         app.rate = 0;
         app.currentFrame = undefined;
 
@@ -90,11 +92,24 @@ var ffmpeg = require('fluent-ffmpeg');
         // Update Time Clock (top right side)
         $interval(function() {
             if ($scope.player != undefined && !$scope.player.paused()) {
+                app.savecurrentTime = secondToDate($scope.player.currentTime());
+                app.savecurrentFrame = Math.floor(app.rate * ($scope.player.currentTime() - Math.floor($scope.player.currentTime())));
+                app.currentTime = "Time:" + app.savecurrentTime;
+                app.currentFrame = "Frame:" + app.savecurrentFrame;
 
-                app.currentTime = "Time:" + $scope.player.currentTime();
-                app.currentFrame = "Frame:" + Math.floor(app.rate * ($scope.player.currentTime() - Math.floor($scope.player.currentTime())));
             }
         }, 100);
+
+        function secondToDate(result) {
+            var realtime = result;
+            result = Math.floor(result);
+            var h = Math.floor(result / 3600) < 10 ? '0' + Math.floor(result / 3600) : Math.floor(result / 3600);
+            var m = Math.floor((result / 60 % 60)) < 10 ? '0' + Math.floor((result / 60 % 60)) : Math.floor((result / 60 % 60));
+            var s = Math.floor((result % 60)) < 10 ? '0' + Math.floor((result % 60)) : Math.floor((result % 60));
+            var us = realtime - result;
+            us = Math.floor(us * 1000);
+            return result = h + ":" + m + ":" + s + ":" + us;
+        }
 
         // Autosave
         $interval(function() {
@@ -242,8 +257,8 @@ var ffmpeg = require('fluent-ffmpeg');
             }
 
             app.data[app.currentVideo.name].push({
-                'time': app.currentTime,
-                'frame': app.currentFrame,
+                'time': app.savecurrentTime,
+                'frame': app.savecurrentFrame,
                 'label': app.classifyText
             });
 
