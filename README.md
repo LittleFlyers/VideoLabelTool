@@ -56,5 +56,5 @@ Shortcut    | Description
 
 ### Labeling Page
 
-![Labeling Page](docs/labeling-page.png)
+![Labeling Page](docs/page.png)
 "# VideoLabelTool" 

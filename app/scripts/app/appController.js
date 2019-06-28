@@ -41,7 +41,7 @@ var ffmpeg = require('fluent-ffmpeg');
         app.currentTime = undefined;
         app.savecurrentTime = undefined;
         app.savecurrentFrame = undefined;
-        app.rate = 0;
+        app.rate = undefined;
         app.currentFrame = undefined;
 
         //listen for when the vjs-media object changes
@@ -159,7 +159,8 @@ var ffmpeg = require('fluent-ffmpeg');
             fs.writeFile(app.filename, JSON.stringify({
                 'labels': app.labels,
                 'data': app.data,
-                'videos': app.videos
+								'videos': app.videos,
+								'fps': app.rate,
             }), function(err) {
                 if (err) {
                     return console.log(err);
