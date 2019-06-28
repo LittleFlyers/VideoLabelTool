@@ -1,4 +1,4 @@
-# Action Annotation Tool
+# Video Label Tool
 
 ## Introduction
 
@@ -16,17 +16,22 @@ You should have `Node` and `NPM` installed on your machine.
 
 ### 1. Clone the repository
 ```
-git clone https://github.com/devyhia/action-annotation
+git clone https://github.com/LittleFlyers/VideoLabelTool.git
 ```
 
 ### 2. Install the dependencies
 ```
 npm install
 ```
-
-### 3. Run the application
+### 3. Install FFmpeg
+In Windwos,you should install the FFmpeg and set environment variables.
+Then,install fluent-ffmpeg
 ```
-npm start
+npm install fluent-ffmpeg --save
+```
+### 4. Run the application
+```
+npm run start
 ```
 
 ## Why use it?
