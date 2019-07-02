@@ -64,13 +64,13 @@ var ffmpeg = require('fluent-ffmpeg');
 
         Mousetrap.bindGlobal(['ctrl+left', 'command+left'], function() {
             if ($scope.player) {
-                $scope.player.currentTime(app.currentTime - 1);
+                $scope.player.currentTime($scope.player.currentTime() - 1);
             }
         });
 
         Mousetrap.bindGlobal(['ctrl+right', 'command+right'], function() {
             if ($scope.player) {
-                $scope.player.currentTime(app.currentTime + 1);
+                $scope.player.currentTime($scope.player.currentTime() + 1);
             }
         });
 
