@@ -41,7 +41,10 @@ var ffmpeg = require('fluent-ffmpeg');
         app.currentTime = undefined;
         app.savecurrentTime = undefined;
         app.savecurrentFrame = undefined;
+        // 实际帧率
         app.rate = undefined;
+        // 平均帧率
+        app.avg_frame_rate = undefined;
         app.currentFrame = undefined;
 
         //listen for when the vjs-media object changes
@@ -159,8 +162,8 @@ var ffmpeg = require('fluent-ffmpeg');
             fs.writeFile(app.filename, JSON.stringify({
                 'labels': app.labels,
                 'data': app.data,
-								'videos': app.videos,
-								'fps': app.rate,
+                'videos': app.videos,
+                'fps': app.rate
             }), function(err) {
                 if (err) {
                     return console.log(err);
@@ -225,11 +228,26 @@ var ffmpeg = require('fluent-ffmpeg');
 
             var mediaObj = { sources: [{ type: "video/mp4", src: "file://" + app.currentVideo.path }] };
             ffmpeg.ffprobe(app.currentVideo.path, (err, data) => {
-                //console.log(JSON.stringify(data))
+                console.log(JSON.stringify(data))
                 var rawdata = JSON.stringify(data)
                 var op = rawdata.match(/"r_frame_rate":"(\S*)\/1","avg_frame_rate"/)[1];
-                console.log(op);
+                // 实际帧率
                 app.rate = op;
+                // 平均帧率计算
+                var avg_rate = rawdata.match(/"avg_frame_rate":"(\S*)","time_base"/)[1];
+                var arr = avg_rate.split("/");
+                var arr_1 = arr[0];
+                var arr_2 = arr[1];
+                console.log(op);
+                console.log(avg_rate);
+                console.log(op);
+                console.log(arr_1);
+                console.log(arr_2);
+                var result = arr_1 / arr_2;
+                // 此处做四舍五入
+                app.avg_frame_rate = Math.round(result);
+                console(result);
+                // app.rate = op;
             })
 
 
