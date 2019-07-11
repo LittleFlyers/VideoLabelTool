@@ -46,6 +46,7 @@ var ffmpeg = require('fluent-ffmpeg');
         // 平均帧率
         app.avg_frame_rate = undefined;
         app.currentFrame = undefined;
+        app.preciseTime = undefined;
 
         //listen for when the vjs-media object changes
         $scope.$on('vjsVideoMediaChanged', function(e, data) {
@@ -95,10 +96,11 @@ var ffmpeg = require('fluent-ffmpeg');
         // Update Time Clock (top right side)
         $interval(function() {
             if ($scope.player != undefined && !$scope.player.paused()) {
+                app.preciseTime = $scope.player.currentTime();
                 app.savecurrentTime = secondToDate($scope.player.currentTime());
-                app.savecurrentFrame = Math.floor(app.rate * ($scope.player.currentTime() - Math.floor($scope.player.currentTime())));
+                // app.savecurrentFrame = Math.floor(app.rate * ($scope.player.currentTime() - Math.floor($scope.player.currentTime())));
                 app.currentTime = "Time:" + app.savecurrentTime;
-                app.currentFrame = "Frame:" + app.savecurrentFrame;
+                // app.currentFrame = "Frame:" + app.savecurrentFrame;
 
             }
         }, 100);
@@ -277,7 +279,8 @@ var ffmpeg = require('fluent-ffmpeg');
 
             app.data[app.currentVideo.name].push({
                 'time': app.savecurrentTime,
-                'frame': app.savecurrentFrame,
+                'precisetime': app.preciseTime,
+                //'frame': app.savecurrentFrame,
                 'label': app.classifyText
             });
 
