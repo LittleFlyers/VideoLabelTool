@@ -15,7 +15,7 @@
     "angular-ui-bootstrap": "^2.4.0",
     "bootstrap": "^3.3.7",
     "electron-squirrel-startup": "^1.0.0",
-    "jquery": "^3.1.1",
+    "jquery": "^3.5.0",
     "underscore": "^1.5.2",
     "video.js": "^5.15.1",
     "vjs-video": "^0.1.8",
